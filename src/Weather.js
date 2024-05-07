@@ -1,50 +1,45 @@
-import React, {useState, useEffect} from 'react';
-import './App.css';
-import  AppDate  from './AppDate.js';
+import React, {useState} from 'react';
+import WeatherDetails from './WeatherDetails';
+import WeatherForecast from './WeatherForecast';
+import './Weather.css';
 import axios from "axios"
-import 'bootstrap/dist/css/bootstrap.css';
 
-export default function App() {
-  let [city, setCity] = useState("Nairobi");
-  let[weatherData,setWeatherData] = useState({})
+
+export default function Weather(props) {
+  let [city, setCity] = useState(props.defaultCity);
+  let[weatherData,setWeatherData] = useState({ready: false})
   
-  function showCity(event){
-    setCity(event.target.value)
-  }
-
+  
   function handleResponse(response){
     setWeatherData({
+   ready:true,     
+   coordinates: response.data.coord,     
    temperature: Math.round(response.data.main.temp),
    city: response.data.name,
    wind:response.data.wind.speed,
    date: new Date(response.data.dt * 1000),
    humidity: response.data.main.humidity,
+   icon: response.data.weather[0].icon,
    description: response.data.weather[0].description,
  });
 }
 
 function handleSearch(event) {
   event.preventDefault();
-  const cityNameInput = event.target.elements.city;
-  if (cityNameInput) {
-    const cityName = cityNameInput.value;
-    setCity(cityName);
-  } else {
-    console.error('City input element not found.');
-  }
+  search()
 }
-  
-  
-  useEffect(function() {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bf54175800a55e59e6c4d6461deeef12&units=metric`;
-    axios.get(url).then(handleResponse)
-    .catch(error => {
-      console.error('Error fetching weather data:', error);
-    });
-  }, [city]);
+function showCity(event){
+    setCity(event.target.value)
+  }
 
-  
-  return (
+function search () {
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=bf54175800a55e59e6c4d6461deeef12&units=metric`;
+axios.get(url).then(handleResponse);
+     }
+
+
+  if (weatherData.ready){
+    return (
     <div className="WeatherApp">
       <form onSubmit={handleSearch}>
         <div className='row'>
@@ -57,32 +52,12 @@ function handleSearch(event) {
         </div>
        
       </form>
-      <h1>{weatherData.city}</h1>
-      <ul>
-        <li> <AppDate date={weatherData.date}/></li>
-        <li className='text-capitalize'>{weatherData.description}</li>
-      </ul> 
-      <div className='row'>
-      <div className='col-6'>
-      <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-Newyork" />
-      <strong className='temperature'><span>{weatherData.temperature}</span></strong>
-      <span className='unit'>°C</span>
+      <WeatherDetails data={weatherData} />
       </div>
-      <div className='col-6'>
-        <ul>
-        <li>Precipitation 1%</li>
-        <li>Humidity: {weatherData.humidity}</li>
-        <li>Wind: {weatherData.wind}km/h</li>
-        </ul>
-      </div>
-      </div>
-
-    <div className='row'>
-
-
-    </div>
-       
-    </div>
-  );
+    );
+} else {
+    search();
+    return "Loading...";
+}
 }
 
