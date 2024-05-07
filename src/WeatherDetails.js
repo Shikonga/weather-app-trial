@@ -1,5 +1,6 @@
 import React from 'react';
 import AppDate from './AppDate';
+import WeatherTemperature from "./WeatherTemperature";
 
 export default function WeatherDetails(props) {
   return (
@@ -14,13 +15,11 @@ export default function WeatherDetails(props) {
       <div className="row">
         <div className="col-6">
           <img
+          <img className='WeatherIcon'
             src={`https://openweathermap.org/img/wn/${props.data.icon}.png`}
             alt="weather icon"
           />
-          <strong className="temperature">
-            <span>{props.data.temperature}</span>
-          </strong>
-          <span className="unit">°C</span>
+          <WeatherTemperature celsius={props.data.temperature}/>
         </div>
         <div className="col-6">
           <ul>
