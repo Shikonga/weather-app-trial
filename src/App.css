@@ -1,44 +1,50 @@
 
 
 .WeatherApp{
-  border:1px solid #dadde1;
-  max-width: 600px;
+  max-width: 700px;
+  border-radius: 10px;
   font-family: arial, sans-serif;
-  color: #81858A;
-  margin: 30px auto;
+  font-size: 30px;
+  color: #EEF4F9;
   padding: 16px;
-  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background-color: #0B121E;  /*rgba(255, 255, 255, 0.5);*/
+  border: none;
+  margin: 30px auto;
+
 }
+
+header{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0 0 30px 0;
+}    
+
 .WeatherApp h1{
-  font-size: 24px;
+  font-size: 38px;
   font-weight: 100;
-  line-height: 29px;
-  margin: 20px 0 0 0;
-}
+  line-height: 48px;
+  margin: 0;
+
+  }
 .WeatherApp ul{
   margin: 0;
   padding: 0;
+  
 }
+
 
 .WeatherApp li{
   list-style: none;
-  line-height: 19px;
-  font-size: 16px;
-  font-weight: 100;
+  line-height: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 14px;
+  
 }
 
-.WeatherApp img{
-  width: 40px;
-}
-.WeatherApp .temperature{
-  font-weight: bold;
-  font-size: 30px;
-  line-height: 64px;
-  font-weight: 400;
-}
 
 footer{
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   margin: 10px 0;
 }

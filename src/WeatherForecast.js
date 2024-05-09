@@ -17,8 +17,9 @@ export default function WeatherForecast(props) {
   }
 
   function loadForecast() {
-    const { lon, lat } = props.coordinates;
-    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=bf54175800a55e59e6c4d6461deeef12&units=metric&exclude=current,minutely,hourly,alerts`;
+    let longitude = props.coordinates.lon;
+    let latitude = props.coordinates.lat;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=bf54175800a55e59e6c4d6461deeef12&units=metric&exclude=current,minutely,hourly,alerts`;
 
     axios.get(apiUrl)
       .then(handleResponse)

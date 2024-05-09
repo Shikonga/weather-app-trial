@@ -33,7 +33,9 @@ export default function App() {
             hosted on Netlify
           </a>
         </footer>
+      
       </div>
     </div>
+    
   )
 }

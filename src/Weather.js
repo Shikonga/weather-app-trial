@@ -3,6 +3,7 @@ import WeatherDetails from './WeatherDetails';
 import WeatherForecast from './WeatherForecast';
 import './Weather.css';
 import axios from "axios"
+import DailyForecast from './DailyForecast';
 
 
 export default function Weather(props) {
@@ -21,6 +22,10 @@ export default function Weather(props) {
    humidity: response.data.main.humidity,
    icon: response.data.weather[0].icon,
    description: response.data.weather[0].description,
+   precipitation: {
+    rain: response.data.rain && response.data.rain['1h'] ? response.data.rain['1h'] : 0,
+
+  }
  });
 }
 
@@ -42,17 +47,13 @@ axios.get(url).then(handleResponse);
     return (
     <div className="WeatherApp">
       <form onSubmit={handleSearch}>
-        <div className='row'>
-          <div className='col-9'>
-          <input type="text" placeholder="Enter a city.." className="Form-Control w-100 h-100" autoFocus onChange={showCity}/>
-          </div>
-          <div className='col-3'>
-             <input type="Submit" value="Search" className=" btn btn-primary"/>
-          </div>
-        </div>
-       
+        <header>
+          <input type="text" placeholder="Enter a city.." className="Form-Control searchCity" onChange={showCity}/>
+          <button className='buttonSearch'>Search</button>
+        </header>
       </form>
       <WeatherDetails data={weatherData} />
+      <WeatherForecast coordinates={weatherData.coordinates} /> 
       </div>
     );
 } else {
